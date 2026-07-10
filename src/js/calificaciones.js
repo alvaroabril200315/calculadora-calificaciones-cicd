@@ -43,13 +43,21 @@ export function obtenerEstado(promedio) {
   return promedio >= 7 ? 'Aprobado' : 'Reprobado';
 }
 
+const REGLAS_CLASIFICACION = [
+  { minimo: 9, nombre: 'Excelente' },
+  { minimo: 7, nombre: 'Aprobado' },
+  { minimo: 5, nombre: 'Recuperación' },
+  { minimo: 0, nombre: 'Reprobado' }
+];
+
 export function clasificarPromedio(promedio) {
   validarPromedio(promedio);
 
-  if (promedio >= 9) return 'Excelente';
-  if (promedio >= 7) return 'Aprobado';
-  if (promedio >= 5) return 'Recuperación';
-  return 'Reprobado';
+  const regla = REGLAS_CLASIFICACION.find(
+    ({ minimo }) => promedio >= minimo
+  );
+
+  return regla.nombre;
 }
 
 function validarPromedio(promedio) {
